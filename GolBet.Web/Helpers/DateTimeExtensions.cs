@@ -10,3 +10,7 @@ public static class DateTimeExtensions
     public static DateTime ToColombiaTime(this DateTime utcDate)
         => TimeZoneInfo.ConvertTimeFromUtc(utcDate, ColombiaZone);
 
+}
+
+
+
