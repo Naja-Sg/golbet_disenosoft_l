@@ -22,8 +22,17 @@ builder.Services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepositor
 // Specific repositories
 builder.Services.AddScoped<IMatchRepository, MatchRepository>();
 
+// Specific repositories
+builder.Services.AddScoped<IMatchRepository, MatchRepository>();
+
+// AutoMapper: scans the assembly containing MappingProfile for all profiles
+builder.Services.AddAutoMapper(typeof(MappingProfile));
+
+// Business services
+builder.Services.AddScoped<IMatchService, MatchService>();
 
 var app = builder.Build();
+
 
 // Seed the database on startup
 using (var scope = app.Services.CreateScope())
@@ -53,12 +62,3 @@ app.MapControllerRoute(
     pattern: "{controller=Home}/{action=Index}/{id?}");
 
 app.Run();
-
-// Specific repositories
-builder.Services.AddScoped<IMatchRepository, MatchRepository>();
-
-// AutoMapper: scans the assembly containing MappingProfile for all profiles
-builder.Services.AddAutoMapper(typeof(MappingProfile));
-
-// Business services
-builder.Services.AddScoped<IMatchService, MatchService>();
