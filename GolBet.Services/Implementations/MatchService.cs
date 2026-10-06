@@ -1,5 +1,6 @@
 ﻿// GolBet.Services/Implementations/MatchService.cs
 using AutoMapper;
+using GolBet.Entities;
 using GolBet.Entities.Enums;
 using GolBet.Repositories.Interfaces;
 using GolBet.Services.DTOs;
@@ -25,11 +26,12 @@ public class MatchService : IMatchService
         return _mapper.Map<IEnumerable<MatchDto>>(matches);
     }
 
-    // GolBet.Services/Implementations/MatchService.cs  (agregar)
     public async Task<MatchDetailDto?> GetDetailAsync(int id)
     {
         var match = await _matchRepository.GetByIdWithDetailsAsync(id);
+
         return match is null ? null : _mapper.Map<MatchDetailDto>(match);
+        //If ternario
     }
 
     public async Task<MatchFormDto?> GetForEditAsync(int id)
@@ -70,13 +72,9 @@ public class MatchService : IMatchService
     private static void ValidateBusinessRules(MatchFormDto dto)
     {
         if (dto.HomeTeamId == dto.AwayTeamId)
-            throw new InvalidOperationException(
-                "El equipo local y el visitante no pueden ser el mismo.");
+            throw new InvalidOperationException("El equipo local y el visitante no pueden ser el mismo.");
 
         if (dto.Date.ToUtcFromColombia() <= DateTime.UtcNow)
-            throw new InvalidOperationException(
-                "La fecha del partido debe ser futura.");
+            throw new InvalidOperationException("La fecha del partido debe ser futura.");
     }
-
-
 }

@@ -1,8 +1,8 @@
-﻿using GolBet.Services.DTOs;
-using GolBet.Services.Interfaces;
-using Microsoft.AspNetCore.Mvc;
+﻿using GolBet.Repositories.Data;   // IdentitySeeder constants 
+using Microsoft.AspNetCore.Authorization;
 
-namespace GolBet.Web.Controllers;
+
+[Authorize(Roles = IdentitySeeder.AdminRole)]
 
 public class TeamsController : Controller
 {
